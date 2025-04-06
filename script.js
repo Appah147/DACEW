@@ -7,8 +7,9 @@ document.getElementById('price-range').addEventListener('input', function() {
 });
 //aapah miss fina 
 function filterPrice(){
+    console.log("La classe de products sont: ", document.getElementsByClassName(products))
     const produits = document.getElementsByClassName('product-card');
-    console.log(produits)
+    console.log("Les produits sont: ", produits)
     for (let i = 0; i < products.length; i++) {
         const product = produits[i];
         console.log(product.getAttribute('product-name'));
