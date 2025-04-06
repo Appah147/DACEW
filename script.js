@@ -17,10 +17,10 @@ function filterPrice(){
         const price = parseFloat(product.getElementsByClassName('product-price')[0].innerHTML);
         if (price > maxPrice) {
             product.style.display = 'none'; // Masquer le produit si le prix est supérieur à maxPrice
-            console.log('Masquer le produit : ' + product.getElementsByClassName('product-name')[0].innerHTML);
+            console.log('Masquer le produit : ' + product.getElementsByClassName('product-title')[0].innerHTML);
         } else {
             product.style.display = 'block'; // Afficher le produit si le prix est inférieur ou égal à maxPrice
-            console.log('Afficher le produit : ' + product.getElementsByClassName('product-name')[0].innerHTML);
+            console.log('Afficher le produit : ' + product.getElementsByClassName('product-title')[0].innerHTML);
         }
         console.log(product.getElementsByClassName('product-name'));
         console.log(parseFloat(product.getElementsByClassName('product-price')[0].innerHTML));
