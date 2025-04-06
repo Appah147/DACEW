@@ -225,10 +225,8 @@
         <div class="map-container" style="position: relative; height: 500px;">
             <div class="map-overlay" style="position: absolute; z-index: 1000; background: rgba(255,255,255,0.9); padding: 10px; margin: 10px; border-radius: 8px;">
                 <div>Entrez votre adresse pour trouver les points de livraison</div>
-                <!-- Ajout de l'ID à l'input -->
                 <input type="text" id="address-input" placeholder="Votre adresse..." style="width: 100%; padding: 5px; margin-top: 5px;">
                 <div class="map-controls" style="margin-top: 10px;">
-                    <!-- Modification pour appeler la fonction searchAddress() -->
                     <button class="map-btn" onclick="searchAddress()">Rechercher</button>
                     <button class="map-btn" onclick="locateUser()">Utiliser ma position</button>
                 </div>
@@ -245,6 +243,11 @@
     
     <!-- Leaflet Map Initialization -->
     <script>
+        let previousMarker = null; // Store the previous marker
+        let previousLatLng = null; // Store the previous LatLng
+        let polyline = null; // Store the polyline
+        let routeLayer = null; // Store the route layer
+    
         // Initialiser la carte centrée sur Montréal
         const map = L.map('map').setView([45.5019, -73.5674], 13);
     
@@ -296,12 +299,61 @@
                     const lat = parseFloat(data[0].lat);
                     const lon = parseFloat(data[0].lon);
     
+                    // Si nous avons déjà un marqueur précédent, le retirer
+                    if (previousMarker) {
+                        map.removeLayer(previousMarker);
+                    }
+    
+                    // Si une polyline existe, la supprimer
+                    if (polyline) {
+                        map.removeLayer(polyline);
+                    }
+    
+                    // Si un itinéraire existe, le supprimer
+                    if (routeLayer) {
+                        map.removeLayer(routeLayer);
+                    }
+    
                     // Déplacer la carte et ajouter un marqueur à la nouvelle adresse
-                    map.setView([lat, lon], 14);
-                    L.marker([lat, lon]).addTo(map).bindPopup("Adresse trouvée").openPopup();
+                    const newLatLng = [lat, lon];
+                    map.setView(newLatLng, 14);
+                    previousMarker = L.marker(newLatLng).addTo(map).bindPopup("Adresse trouvée").openPopup();
+                    previousLatLng = newLatLng;
+    
+                    // Dessiner une ligne rouge pointillée entre les deux endroits
+                    if (previousLatLng) {
+                        polyline = L.polyline([previousLatLng, newLatLng], {
+                            color: 'red',
+                            weight: 2,
+                            dashArray: '5, 5'
+                        }).addTo(map);
+                    }
+    
+                    // Calculer l'itinéraire entre les deux points
+                    calculateRoute(previousLatLng, newLatLng);
                 })
                 .catch(error => {
                     alert("Erreur lors de la recherche.");
+                    console.error(error);
+                });
+        }
+    
+        // Fonction pour calculer l'itinéraire entre deux points
+        function calculateRoute(start, end) {
+            const routeUrl = `https://router.project-osrm.org/route/v1/driving/${start[1]},${start[0]};${end[1]},${end[0]}?overview=false&geometries=geojson`;
+    
+            fetch(routeUrl)
+                .then(response => response.json())
+                .then(data => {
+                    const route = data.routes[0].geometry;
+    
+                    // Ajouter l'itinéraire sur la carte
+                    routeLayer = L.geoJSON(route, {
+                        style: { color: 'blue', weight: 4 }
+                    }).addTo(map);
+                })
+                .catch(error => {
+                    alert("Erreur lors du calcul de l'itinéraire.");
                     console.error(error);
                 });
         }
