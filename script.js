@@ -11,18 +11,19 @@ function filterPrice(){
     const produits = document.getElementsByClassName('product-card');
     console.log("Les produits sont: ", produits)
     for (let i = 0; i < produits.length; i++) {
+
         const product = produits[i];
-        
-        const price = parseFloat(product.getElementsByClassName('data-price'));
+    
+        const price = parseFloat(document.getElementsByClassName('data-price')[0].innerHTML);
         if (price > maxPrice) {
             product.style.display = 'none'; // Masquer le produit si le prix est supérieur à maxPrice
-            console.log('Masquer le produit : ' + product.getElementsByClassName('product-name'));
+            console.log('Masquer le produit : ' + document.getElementsByClassName('product-name')[0].innerHTML);
         } else {
             product.style.display = 'block'; // Afficher le produit si le prix est inférieur ou égal à maxPrice
-            console.log('Afficher le produit : ' + product.getElementsByClassName('product-name'));
+            console.log('Afficher le produit : ' + document.getElementsByClassName('product-name')[0].innerHTML);
         }
         console.log(product.getElementsByClassName('product-name'));
-        console.log(parseFloat(product.getElementsByClassName('data-price')));
+        console.log(parseFloat(document.getElementsByClassName('data-price')[0].innerHTML));
     }
 }
 // Fonction pour filtrer les produits en fonction de la catégorie sélectionnée
