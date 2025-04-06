@@ -257,7 +257,8 @@
         }).addTo(map);
     
         // Ajouter un marqueur initial sur Montréal
-        const marker = L.marker([45.5019, -73.5674]).addTo(map)
+        const deliveryPoint = [45.5019, -73.5674]; // Point de livraison à Montréal
+        const marker = L.marker(deliveryPoint).addTo(map)
             .bindPopup('Point de livraison - Montréal')
             .openPopup();
     
@@ -320,17 +321,15 @@
                     previousMarker = L.marker(newLatLng).addTo(map).bindPopup("Adresse trouvée").openPopup();
                     previousLatLng = newLatLng;
     
-                    // Dessiner une ligne rouge pointillée entre les deux endroits
-                    if (previousLatLng) {
-                        polyline = L.polyline([previousLatLng, newLatLng], {
-                            color: 'red',
-                            weight: 2,
-                            dashArray: '5, 5'
-                        }).addTo(map);
-                    }
+                    // Dessiner une ligne rouge pointillée entre le point de livraison (Montréal) et la nouvelle adresse
+                    polyline = L.polyline([deliveryPoint, newLatLng], {
+                        color: 'red',
+                        weight: 2,
+                        dashArray: '5, 5'
+                    }).addTo(map);
     
                     // Calculer l'itinéraire entre les deux points
-                    calculateRoute(previousLatLng, newLatLng);
+                    calculateRoute(deliveryPoint, newLatLng);
                 })
                 .catch(error => {
                     alert("Erreur lors de la recherche.");
