@@ -10,7 +10,7 @@ function filterPrice(){
     const products = document.getElementsByClassName('product-card');
     for (let i = 0; i < products.length; i++) {
         const product = products[i];
-        const price = parseInt(product.getAttribute('data-price'));
+        const price = parseFloat(product.getAttribute('data-price'));
         if (price > maxPrice) {
             product.style.display = 'none'; // Masquer le produit si le prix est supérieur à maxPrice
         } else {
