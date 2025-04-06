@@ -106,7 +106,7 @@
 }
 
 .category {
-    color: white;
+    color: #cdc526;
     text-decoration: none;
 }
 
@@ -156,6 +156,7 @@
 
 .price-slider {
     width: 100%;
+    color: #cdc526;
 }
 
 /* Section des produits */
@@ -223,19 +224,19 @@
 /* Map section */
 .map-section {
     padding: 20px;
-    background-color: white;
+    background-color: rgb(195, 195, 195);
     border-top: 1px solid #c0d5e8;
 }
 
 .map-title {
     font-size: 18px;
     margin-bottom: 15px;
-    color: #0a3a6d;
+    color: #858020;
 }
 
 .map-container {
     height: 300px;
-    background-color: #e6f0ff;
+    background-color: #949495;
     border: 1px solid #c0d5e8;
     border-radius: 4px;
     position: relative;
@@ -245,7 +246,7 @@
     position: absolute;
     top: 10px;
     left: 10px;
-    background-color: white;
+    background-color: rgb(212, 210, 210);
     padding: 10px;
     border-radius: 4px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
@@ -269,7 +270,7 @@
 /* Pied de page */
 .footer {
     background-color: #060606;
-    color: white;
+    color: #cdc526;
     padding: 20px;
     text-align: center;
 }
@@ -282,6 +283,6 @@
 }
 
 .footer-link {
-    color: white;
+    color: #cdc526;
     text-decoration: none;
 }
