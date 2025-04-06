@@ -247,6 +247,7 @@
         let previousLatLng = null; // Store the previous LatLng
         let polyline = null; // Store the polyline
         let routeLayer = null; // Store the route layer
+        let selectedMarker = null; // Store selected location marker
     
         // Initialiser la carte centrée sur Montréal
         const map = L.map('map').setView([45.5019, -73.5674], 13);
@@ -318,7 +319,7 @@
                     // Déplacer la carte et ajouter un marqueur à la nouvelle adresse
                     const newLatLng = [lat, lon];
                     map.setView(newLatLng, 14);
-                    previousMarker = L.marker(newLatLng).addTo(map).bindPopup("Adresse trouvée").openPopup();
+                    previousMarker = L.marker(newLatLng).addTo(map).bindPopup(data[0].display_name).openPopup();
                     previousLatLng = newLatLng;
     
                     // Dessiner une ligne rouge pointillée entre le point de livraison (Montréal) et la nouvelle adresse
@@ -330,6 +331,9 @@
     
                     // Calculer l'itinéraire entre les deux points
                     calculateRoute(deliveryPoint, newLatLng);
+                    
+                    // Calculer la distance entre les deux points
+                    calculateDistance(deliveryPoint, newLatLng);
                 })
                 .catch(error => {
                     alert("Erreur lors de la recherche.");
@@ -351,6 +355,10 @@
                         routeLayer = L.geoJSON(route, {
                             style: { color: 'blue', weight: 4 }
                         }).addTo(map);
+    
+                        // Calculate and display the distance for the route
+                        const routeDistance = data.routes[0].legs[0].distance / 1000; // Convert meters to kilometers
+                        alert(`La distance de l'itinéraire est de ${routeDistance.toFixed(2)} km.`);
                     } else {
                         alert("Aucun itinéraire trouvé.");
                     }
@@ -360,6 +368,31 @@
                     console.error(error);
                 });
         }
+    
+        // Fonction pour calculer la distance entre deux points
+        function calculateDistance(start, end) {
+            const lat1 = start[0], lon1 = start[1];
+            const lat2 = end[0], lon2 = end[1];
+            const R = 6371; // Rayon de la Terre en km
+            const dLat = (lat2 - lat1) * Math.PI / 180;
+            const dLon = (lon2 - lon1) * Math.PI / 180;
+            const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                      Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+                      Math.sin(dLon / 2) * Math.sin(dLon / 2);
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+            const distance = R * c; // Distance en km
+            alert(`La distance entre les deux points est de ${distance.toFixed(2)} km.`);
+        }
+    
+        // Fonction pour sélectionner un endroit sur la carte
+        map.on('click', function(e) {
+            if (selectedMarker) {
+                map.removeLayer(selectedMarker); // Remove the old marker if it exists
+            }
+            selectedMarker = L.marker(e.latlng).addTo(map)
+                .bindPopup(`Vous avez sélectionné: ${e.latlng.lat.toFixed(4)}, ${e.latlng.lng.toFixed(4)}`)
+                .openPopup();
+        });
     </script>
     
     <!-- Pied de page -->
