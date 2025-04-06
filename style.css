@@ -82,14 +82,14 @@
 }
 
 .language-dropdown a {
-    color: #1a4b8c;
+    color: #cdc526;
     padding: 12px 16px;
     text-decoration: none;
     display: block;
 }
 
 .language-dropdown a:hover {
-    background-color: #e6f0ff;
+    background-color: #9c9d9f;
 }
 
 .language-selector:hover .language-dropdown {
@@ -98,7 +98,7 @@
 
 /* Barre des catégories */
 .categories {
-    background-color: #595a5c;
+    background-color: #29292a;
     color: #cdc526;
     padding: 8px 20px;
     display: flex;
@@ -129,7 +129,7 @@
 /* Section des produits et filtres */
 .content-wrapper {
     display: flex;
-    background-color: #4d4d4d;
+    background-color: #29292a;
 }
 
 .filters {
@@ -169,7 +169,7 @@
 }
 
 .product-card {
-    border: 1px solid #c0d5e8;
+    border: 1px solid #cdc526;
     padding: 15px;
     border-radius: 4px;
     display: flex;
@@ -209,7 +209,7 @@
 
 .product-button {
     background-color: #040404;
-    border: 1px solid #2c5ea0;
+    border: 1px solid #cdc526;
     color: #cdc526;
     padding: 8px;
     border-radius: 4px;
@@ -224,7 +224,7 @@
 /* Map section */
 .map-section {
     padding: 20px;
-    background-color: rgb(195, 195, 195);
+    background-color:#949495;
     border-top: 1px solid #c0d5e8;
 }
 
@@ -236,7 +236,7 @@
 
 .map-container {
     height: 300px;
-    background-color: #949495;
+    background-color: rgb(195, 195, 195);
     border: 1px solid #c0d5e8;
     border-radius: 4px;
     position: relative;
