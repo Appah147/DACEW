@@ -244,7 +244,7 @@
     <!-- Leaflet Map Initialization -->
     <script>
         // Initialize the map centered on Paris
-        const map = L.map('map').setView([48.8566, 2.3522], 13);
+        const map = L.map('map').setView([45.5019, -73.5674], 13);
 
         // Add OpenStreetMap tiles
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -252,8 +252,8 @@
         }).addTo(map);
 
         // Add a sample marker
-        const marker = L.marker([48.8566, 2.3522]).addTo(map)
-            .bindPopup('Point de livraison - Paris')
+        const marker = L.marker([45.5019, -73.5674]).addTo(map)
+            .bindPopup('Point de livraison - Montreal')
             .openPopup();
 
         // Optional: Use geolocation API
