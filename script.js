@@ -6,14 +6,16 @@ document.getElementById('price-range').addEventListener('input', function() {
     maxPrice = this.value; // Met à jour la valeur maximale du prix
 });
 //aapah miss fina 
-const products = getElementByClassName('product-card');
-for (let i = 0; i < products.length; i++) {
-    const product = products[i];
-    const price = parseInt(product.getAttribute('data-price'));
-    if (price > maxPrice) {
-        product.style.display = 'none'; // Masquer le produit si le prix est supérieur à maxPrice
-    } else {
-        product.style.display = 'block'; // Afficher le produit si le prix est inférieur ou égal à maxPrice
+function filterPrice(){
+    const products = getElementByClassName('product-card');
+    for (let i = 0; i < products.length; i++) {
+        const product = products[i];
+        const price = parseInt(product.getAttribute('data-price'));
+        if (price > maxPrice) {
+            product.style.display = 'none'; // Masquer le produit si le prix est supérieur à maxPrice
+        } else {
+            product.style.display = 'block'; // Afficher le produit si le prix est inférieur ou égal à maxPrice
+        }
     }
 }
 // Fonction pour filtrer les produits en fonction de la catégorie sélectionnée
