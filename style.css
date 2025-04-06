@@ -1,0 +1,286 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+/* Barre de navigation */
+.navbar {
+    background-color: #1a4b8c;
+    color: white;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.logo img {
+    height: 40px;
+}
+
+.search-bar {
+    flex-grow: 1;
+    margin: 0 20px;
+    display: flex;
+}
+
+.search-bar input {
+    flex-grow: 1;
+    padding: 8px;
+    border: none;
+    border-radius: 4px 0 0 4px;
+}
+
+.search-bar button {
+    background-color: #4c9aff;
+    border: none;
+    padding: 0 15px;
+    border-radius: 0 4px 4px 0;
+    cursor: pointer;
+}
+
+.nav-links {
+    display: flex;
+    gap: 20px;
+}
+
+.nav-link {
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.language-selector {
+    position: relative;
+    margin-right: 15px;
+}
+
+.language-btn {
+    background: none;
+    border: none;
+    color: white;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.language-dropdown {
+    display: none;
+    position: absolute;
+    background-color: white;
+    min-width: 120px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    border-radius: 4px;
+}
+
+.language-dropdown a {
+    color: #1a4b8c;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.language-dropdown a:hover {
+    background-color: #e6f0ff;
+}
+
+.language-selector:hover .language-dropdown {
+    display: block;
+}
+
+/* Barre des catégories */
+.categories {
+    background-color: #2c5ea0;
+    color: white;
+    padding: 8px 20px;
+    display: flex;
+    gap: 20px;
+}
+
+.category {
+    color: white;
+    text-decoration: none;
+}
+
+/* Bannière */
+.banner {
+    height: 250px;
+    background-color: #e6f0ff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.banner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Section des produits et filtres */
+.content-wrapper {
+    display: flex;
+    background-color: #f0f8ff;
+}
+
+.filters {
+    width: 250px;
+    padding: 20px;
+    background-color: white;
+    border-right: 1px solid #c0d5e8;
+}
+
+.filter-section {
+    margin-bottom: 20px;
+}
+
+.filter-title {
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #0a3a6d;
+}
+
+.filter-option {
+    margin-bottom: 8px;
+}
+
+.price-slider {
+    width: 100%;
+}
+
+/* Section des produits */
+.products {
+    flex-grow: 1;
+    padding: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.product-card {
+    border: 1px solid #c0d5e8;
+    padding: 15px;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+}
+
+.product-image {
+    height: 150px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.product-image img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.product-title {
+    font-size: 16px;
+    margin-bottom: 8px;
+    color: #0a3a6d;
+}
+
+.product-price {
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: #0a3a6d;
+}
+
+.product-rating {
+    color: #4c9aff;
+    margin-bottom: 8px;
+}
+
+.product-button {
+    background-color: #4c9aff;
+    border: 1px solid #2c5ea0;
+    color: white;
+    padding: 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: auto;
+}
+
+.product-button:hover {
+    background-color: #2c5ea0;
+}
+
+/* Map section */
+.map-section {
+    padding: 20px;
+    background-color: white;
+    border-top: 1px solid #c0d5e8;
+}
+
+.map-title {
+    font-size: 18px;
+    margin-bottom: 15px;
+    color: #0a3a6d;
+}
+
+.map-container {
+    height: 300px;
+    background-color: #e6f0ff;
+    border: 1px solid #c0d5e8;
+    border-radius: 4px;
+    position: relative;
+}
+
+.map-overlay {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: white;
+    padding: 10px;
+    border-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.map-controls {
+    display: flex;
+    margin-top: 10px;
+    gap: 10px;
+}
+
+.map-btn {
+    background-color: #4c9aff;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* Pied de page */
+.footer {
+    background-color: #1a4b8c;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+.footer-links {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 10px;
+}
+
+.footer-link {
+    color: white;
+    text-decoration: none;
+}

@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>David Pan - Achetez en ligne</title>
+    <link href="style.css" rel="stylesheet" >
+    <style>
+    </style>
+</head>
+<body>
+    <!-- Barre de navigation -->
+    <div class="navbar">
+        <a href="#" class="logo">
+            <img src="assets/logo.png" alt="QcBucks">
+        </a>
+        <div class="search-bar">
+            <input type="text" placeholder="Rechercher un produit...">
+            <button>🔍</button>
+        </div>
+        <div class="language-selector">
+            <button class="language-btn">🌐 FR ▼</button>
+            <div class="language-dropdown">
+                <a href="#">Français</a>
+                <a href="#">English</a>
+                <a href="#">Español</a>
+                <a href="#">Deutsch</a>
+                <a href="#">Italiano</a>
+            </div>
+        </div>
+        <div class="nav-links">
+            <div>
+                <div class="nav-link">Bonjour, Identifiez-vous</div>
+                <div class="nav-link"><strong>Compte et listes</strong></div>
+            </div>
+            <div>
+                <div class="nav-link">Retours</div>
+                <div class="nav-link"><strong>et commandes</strong></div>
+            </div>
+            <div class="nav-link">🛒 Panier</div>
+        </div>
+    </div>
+    
+    <!-- Barre des catégories -->
+    <div class="categories">
+        <a href="#" class="category">Toutes nos catégories</a>
+        <a href="#" class="category">Meilleures Ventes</a>
+        <a href="#" class="category">Rabais</a>
+        <a href="#" class="category">Dernières Nouveautés</a>
+        <a href="#" class="category">Service Client</a>
+    </div>
+    
+    <!-- Bannière -->
+    <div class="banner">
+        <img src="/api/placeholder/1200/250" alt="Bannière promotionnelle">
+    </div>
+    
+    <!-- Contenu principal avec filtres et produits -->
+    <div class="content-wrapper">
+        <!-- Filtres -->
+        <div class="filters">
+            <div class="filter-section">
+                <div class="filter-title">Catégories</div>
+                <div class="filter-option">
+                    <input type="checkbox" id="cat-electronics">
+                    <label for="cat-electronics">Électronique</label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="cat-computer">
+                    <label for="cat-computer">Informatique</label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="cat-audio">
+                    <label for="cat-audio">Audio</label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="cat-wearable">
+                    <label for="cat-wearable">Objets connectés</label>
+                </div>
+            </div>
+            
+            <div class="filter-section">
+                <div class="filter-title">Prix</div>
+                <div class="filter-option">
+                    <input type="range" min="0" max="500" value="250" class="price-slider" id="price-range">
+                    <div>0€ - <span id="price-value">250</span>€</div>
+                </div>
+            </div>
+            
+            <div class="filter-section">
+                <div class="filter-title">Évaluation</div>
+                <div class="filter-option">
+                    <input type="checkbox" id="rating-4">
+                    <label for="rating-4">★★★★☆ et plus</label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="rating-3">
+                    <label for="rating-3">★★★☆☆ et plus</label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="rating-2">
+                    <label for="rating-2">★★☆☆☆ et plus</label>
+                </div>
+            </div>
+            
+            <div class="filter-section">
+                <div class="filter-title">Marque</div>
+                <div class="filter-option">
+                    <input type="checkbox" id="brand-apple">
+                    <label for="brand-apple">Stuff</label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="brand-samsung">
+                    <label for="brand-samsung">Stuff2</label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="brand-sony">
+                    <label for="brand-sony">Stuff3</label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="brand-bose">
+                    <label for="brand-bose">Stuff4</label>
+                </div>
+            </div>
+            
+            <button class="product-button">Appliquer les filtres</button>
+        </div>
+        
+        <!-- Section des produits -->
+        <div class="products">
+            <!-- Produit 1 -->
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="/api/placeholder/200/150" alt="Produit 1">
+                </div>
+                <div class="product-title">Produit...</div>
+                <div class="product-price">99,99 €</div>
+                <div class="product-rating">★★★★★ (2 456)</div>
+                <button class="product-button">Ajouter au panier</button>
+            </div>
+            
+            <!-- Produit 2 -->
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="/api/placeholder/200/150" alt="Produit 2">
+                </div>
+                <div class="product-title">Produit...</div>
+                <div class="product-price">129,99 €</div>
+                <div class="product-rating">★★★★★ (3 827)</div>
+                <button class="product-button">Ajouter au panier</button>
+            </div>
+            
+            <!-- Produit 3 -->
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="/api/placeholder/200/150" alt="Produit 3">
+                </div>
+                <div class="product-title">Produit...</div>
+                <div class="product-price">59,99 €</div>
+                <div class="product-rating">★★★★☆ (1 874)</div>
+                <button class="product-button">Ajouter au panier</button>
+            </div>
+            
+            <!-- Produit 4 -->
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="/api/placeholder/200/150" alt="Produit 4">
+                </div>
+                <div class="product-title">Produit...</div>
+                <div class="product-price">249,99 €</div>
+                <div class="product-rating">★★★★☆ (11k)</div>
+                <button class="product-button">Ajouter au panier</button>
+            </div>
+
+            <!-- Produit 5 -->
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="/api/placeholder/200/150" alt="Produit 5">
+                </div>
+                <div class="product-title">Produit...</div>
+                <div class="product-price">249,99 €</div>
+                <div class="product-rating">★★★★☆ (11k)</div>
+                <button class="product-button">Ajouter au panier</button>
+            </div>
+
+            <!-- Produit 6 -->
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="/api/placeholder/200/150" alt="Produit 6">
+                </div>
+                <div class="product-title">Produit...</div>
+                <div class="product-price">249,99 €</div>
+                <div class="product-rating">★★★★☆ (11k)</div>
+                <button class="product-button">Ajouter au panier</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Section carte -->
+    <div class="map-section">
+        <div class="map-title">Localiser les points de livraison près de chez vous</div>
+        <div class="map-container">
+            <div class="map-overlay">
+                <div>Entrez votre adresse pour trouver les points de livraison</div>
+                <input type="text" placeholder="Votre adresse..." style="width: 100%; padding: 5px; margin-top: 5px;">
+                <div class="map-controls">
+                    <button class="map-btn">Rechercher</button>
+                    <button class="map-btn">Utiliser ma position</button>
+                </div>
+            </div>
+            <!-- Emplacement pour la carte -->
+            <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; color: #666;">
+                Carte de livraison interactive
+                <!-- Dans un vrai site, nous utiliserions ici une API de cartographie comme Google Maps, Leaflet, etc. -->
+            </div>
+        </div>
+    </div>
+    
+    <!-- Pied de page -->
+    <div class="footer">
+        <div class="footer-links">
+            <a href="#" class="footer-link">Conditions d'utilisation</a>
+            <a href="#" class="footer-link">Protection de vos informations personnelles</a>
+            <a href="#" class="footer-link">Aide</a>
+            <a href="#" class="footer-link">Vos commentaires</a>
+        </div>
+        <div>© 2025, QcBucks.com</div>
+    </div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
