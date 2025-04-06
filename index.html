@@ -225,38 +225,40 @@
         <div class="map-container" style="position: relative; height: 500px;">
             <div class="map-overlay" style="position: absolute; z-index: 1000; background: rgba(255,255,255,0.9); padding: 10px; margin: 10px; border-radius: 8px;">
                 <div>Entrez votre adresse pour trouver les points de livraison</div>
-                <input type="text" placeholder="Votre adresse..." style="width: 100%; padding: 5px; margin-top: 5px;">
+                <!-- Ajout de l'ID à l'input -->
+                <input type="text" id="address-input" placeholder="Votre adresse..." style="width: 100%; padding: 5px; margin-top: 5px;">
                 <div class="map-controls" style="margin-top: 10px;">
-                    <button class="map-btn">Rechercher</button>
+                    <!-- Modification pour appeler la fonction searchAddress() -->
+                    <button class="map-btn" onclick="searchAddress()">Rechercher</button>
                     <button class="map-btn" onclick="locateUser()">Utiliser ma position</button>
                 </div>
             </div>
-
-            <!-- Map container -->
+    
+            <!-- Emplacement pour la carte -->
             <div id="map" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0;"></div>
         </div>
     </div>
-
+    
     <!-- Include Leaflet CSS and JS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
+    
     <!-- Leaflet Map Initialization -->
     <script>
-        // Initialize the map centered on Paris
+        // Initialiser la carte centrée sur Montréal
         const map = L.map('map').setView([45.5019, -73.5674], 13);
-
-        // Add OpenStreetMap tiles
+    
+        // Ajouter les tuiles OpenStreetMap
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; OpenStreetMap contributors'
         }).addTo(map);
-
-        // Add a sample marker
+    
+        // Ajouter un marqueur initial sur Montréal
         const marker = L.marker([45.5019, -73.5674]).addTo(map)
-            .bindPopup('Point de livraison - Montreal')
+            .bindPopup('Point de livraison - Montréal')
             .openPopup();
-
-        // Optional: Use geolocation API
+    
+        // Fonction pour géolocaliser l'utilisateur
         function locateUser() {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition((position) => {
@@ -269,6 +271,39 @@
             } else {
                 alert("La géolocalisation n'est pas supportée par ce navigateur.");
             }
+        }
+    
+        // Fonction pour rechercher l'adresse et déplacer la carte
+        function searchAddress() {
+            const address = document.getElementById('address-input').value;
+            if (!address) {
+                alert("Veuillez entrer une adresse.");
+                return;
+            }
+    
+            // URL de l'API Nominatim pour la recherche d'adresse
+            const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}`;
+    
+            // Appel API pour géocodage
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.length === 0) {
+                        alert("Adresse introuvable.");
+                        return;
+                    }
+    
+                    const lat = parseFloat(data[0].lat);
+                    const lon = parseFloat(data[0].lon);
+    
+                    // Déplacer la carte et ajouter un marqueur à la nouvelle adresse
+                    map.setView([lat, lon], 14);
+                    L.marker([lat, lon]).addTo(map).bindPopup("Adresse trouvée").openPopup();
+                })
+                .catch(error => {
+                    alert("Erreur lors de la recherche.");
+                    console.error(error);
+                });
         }
     </script>
     
