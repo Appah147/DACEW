@@ -2,4 +2,4 @@
 document.getElementById('price-range').addEventListener('input', function() {
     document.getElementById('price-value').textContent = this.value;
 });
-//I hate niggers
+//aapah miss fina 
