@@ -140,7 +140,7 @@
 }
 
 .filter-section {
-    margin-bottom: 20px;
+    margin-bottom: 30px;
 }
 
 .filter-title {
@@ -224,8 +224,8 @@
 /* Map section */
 .map-section {
     padding: 20px;
-    background-color:#575758;
-    border-top: 1px solid #c0d5e8;
+    background-color:#474747;
+    border-top: 1px solid #cdc526;
 }
 
 .map-title {
@@ -244,9 +244,10 @@
 
 .map-overlay {
     position: absolute;
+    color: #cdc526;
     top: 10px;
     left: 10px;
-    background-color: rgb(212, 210, 210);
+    background-color: rgb(146, 146, 146);
     padding: 10px;
     border-radius: 4px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
