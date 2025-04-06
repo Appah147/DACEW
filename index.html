@@ -235,6 +235,11 @@
             <!-- Emplacement pour la carte -->
             <div id="map" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0;"></div>
         </div>
+    
+        <!-- Section for displaying distances -->
+        <div id="distance-info" style="margin-top: 20px; font-size: 16px;">
+            <!-- Distance details will be displayed here -->
+        </div>
     </div>
     
     <!-- Include Leaflet CSS and JS -->
@@ -358,7 +363,7 @@
     
                         // Calculate and display the distance for the route
                         const routeDistance = data.routes[0].legs[0].distance / 1000; // Convert meters to kilometers
-                        alert(`La distance de l'itinéraire est de ${routeDistance.toFixed(2)} km.`);
+                        displayDistance(routeDistance);
                     } else {
                         alert("Aucun itinéraire trouvé.");
                     }
@@ -381,17 +386,40 @@
                       Math.sin(dLon / 2) * Math.sin(dLon / 2);
             const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
             const distance = R * c; // Distance en km
-            alert(`La distance entre les deux points est de ${distance.toFixed(2)} km.`);
+            displayDistance(distance);
+        }
+    
+        // Display the distance on the page
+        function displayDistance(distance) {
+            const distanceInfo = document.getElementById('distance-info');
+            distanceInfo.innerHTML = `La distance entre les deux points est de ${distance.toFixed(2)} km.`;
         }
     
         // Fonction pour sélectionner un endroit sur la carte
         map.on('click', function(e) {
+            const newLatLng = e.latlng;
+    
+            // If a marker exists, remove it
             if (selectedMarker) {
-                map.removeLayer(selectedMarker); // Remove the old marker if it exists
+                map.removeLayer(selectedMarker);
             }
-            selectedMarker = L.marker(e.latlng).addTo(map)
-                .bindPopup(`Vous avez sélectionné: ${e.latlng.lat.toFixed(4)}, ${e.latlng.lng.toFixed(4)}`)
+    
+            // Add new marker where the user clicked
+            selectedMarker = L.marker(newLatLng).addTo(map)
+                .bindPopup(`Vous avez sélectionné: ${newLatLng.lat.toFixed(4)}, ${newLatLng.lng.toFixed(4)}`)
                 .openPopup();
+    
+            // Recalculate the route from Montreal to the clicked location
+            if (polyline) {
+                map.removeLayer(polyline); // Remove previous polyline
+            }
+            if (routeLayer) {
+                map.removeLayer(routeLayer); // Remove previous route layer
+            }
+    
+            // Recalculate the route
+            calculateRoute(deliveryPoint, newLatLng);
+            calculateDistance(deliveryPoint, newLatLng);
         });
     </script>
     
