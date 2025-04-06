@@ -12,16 +12,17 @@ function filterPrice(){
     console.log("Les produits sont: ", produits)
     for (let i = 0; i < produits.length; i++) {
         const product = produits[i];
-        console.log(product.getAttribute('product-name'));
-        console.log(parseFloat(product.getAttribute('data-price')));
-        const price = parseFloat(product.getAttribute('data-price'));
+        
+        const price = parseFloat(product.getElementsByClassName('data-price'));
         if (price > maxPrice) {
             product.style.display = 'none'; // Masquer le produit si le prix est supérieur à maxPrice
-            console.log('Masquer le produit : ' + product.getAttribute('product-name'));
+            console.log('Masquer le produit : ' + product.getElementsByClassName('product-name'));
         } else {
             product.style.display = 'block'; // Afficher le produit si le prix est inférieur ou égal à maxPrice
-            console.log('Afficher le produit : ' + product.getAttribute('product-name'));
+            console.log('Afficher le produit : ' + product.getElementsByClassName('product-name'));
         }
+        console.log(product.getElementsByClassName('product-name'));
+        console.log(parseFloat(product.getElementsByClassName('data-price')));
     }
 }
 // Fonction pour filtrer les produits en fonction de la catégorie sélectionnée
