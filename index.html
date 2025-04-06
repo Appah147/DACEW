@@ -248,33 +248,35 @@
     
     <!-- Leaflet Map Initialization -->
     <script>
-        let previousMarker = null; // Store the previous marker
-        let previousLatLng = null; // Store the previous LatLng
-        let polyline = null; // Store the polyline
-        let routeLayer = null; // Store the route layer
-        let selectedMarker = null; // Store selected location marker
+        let currentMarker = null; // Replace both previousMarker and selectedMarker
+        let polyline = null;
+        let routeLayer = null;
     
-        // Initialiser la carte centrée sur Montréal
-        const map = L.map('map').setView([45.5019, -73.5674], 13);
+        const deliveryPoint = [45.5019, -73.5674];
+        const map = L.map('map').setView(deliveryPoint, 13);
     
-        // Ajouter les tuiles OpenStreetMap
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; OpenStreetMap contributors'
         }).addTo(map);
     
-        // Ajouter un marqueur initial sur Montréal
-        const deliveryPoint = [45.5019, -73.5674]; // Point de livraison à Montréal
-        const marker = L.marker(deliveryPoint).addTo(map)
+        L.marker(deliveryPoint).addTo(map)
             .bindPopup('Point de livraison - Montréal')
             .openPopup();
     
-        // Fonction pour géolocaliser l'utilisateur
+        function clearMapElements() {
+            if (currentMarker) map.removeLayer(currentMarker);
+            if (polyline) map.removeLayer(polyline);
+            if (routeLayer) map.removeLayer(routeLayer);
+        }
+    
         function locateUser() {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition((position) => {
                     const userLatLng = [position.coords.latitude, position.coords.longitude];
                     map.setView(userLatLng, 14);
-                    L.marker(userLatLng).addTo(map).bindPopup("Vous êtes ici").openPopup();
+                    clearMapElements();
+                    currentMarker = L.marker(userLatLng).addTo(map).bindPopup("Vous êtes ici").openPopup();
+                    drawRouteAndLine(userLatLng);
                 }, () => {
                     alert("Impossible de récupérer votre position.");
                 });
@@ -283,7 +285,6 @@
             }
         }
     
-        // Fonction pour rechercher l'adresse et déplacer la carte
         function searchAddress() {
             const address = document.getElementById('address-input').value;
             if (!address) {
@@ -291,10 +292,8 @@
                 return;
             }
     
-            // URL de l'API Nominatim pour la recherche d'adresse
             const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}`;
     
-            // Appel API pour géocodage
             fetch(url)
                 .then(response => response.json())
                 .then(data => {
@@ -305,40 +304,12 @@
     
                     const lat = parseFloat(data[0].lat);
                     const lon = parseFloat(data[0].lon);
-    
-                    // Si nous avons déjà un marqueur précédent, le retirer
-                    if (previousMarker) {
-                        map.removeLayer(previousMarker);
-                    }
-    
-                    // Si une polyline existe, la supprimer
-                    if (polyline) {
-                        map.removeLayer(polyline);
-                    }
-    
-                    // Si un itinéraire existe, le supprimer
-                    if (routeLayer) {
-                        map.removeLayer(routeLayer);
-                    }
-    
-                    // Déplacer la carte et ajouter un marqueur à la nouvelle adresse
                     const newLatLng = [lat, lon];
+    
                     map.setView(newLatLng, 14);
-                    previousMarker = L.marker(newLatLng).addTo(map).bindPopup(data[0].display_name).openPopup();
-                    previousLatLng = newLatLng;
-    
-                    // Dessiner une ligne rouge pointillée entre le point de livraison (Montréal) et la nouvelle adresse
-                    polyline = L.polyline([deliveryPoint, newLatLng], {
-                        color: 'red',
-                        weight: 2,
-                        dashArray: '5, 5'
-                    }).addTo(map);
-    
-                    // Calculer l'itinéraire entre les deux points
-                    calculateRoute(deliveryPoint, newLatLng);
-                    
-                    // Calculer la distance entre les deux points
-                    calculateDistance(deliveryPoint, newLatLng);
+                    clearMapElements();
+                    currentMarker = L.marker(newLatLng).addTo(map).bindPopup(data[0].display_name).openPopup();
+                    drawRouteAndLine(newLatLng);
                 })
                 .catch(error => {
                     alert("Erreur lors de la recherche.");
@@ -346,7 +317,19 @@
                 });
         }
     
-        // Fonction pour calculer l'itinéraire entre deux points
+        function drawRouteAndLine(destination) {
+            // Red dashed line
+            polyline = L.polyline([deliveryPoint, destination], {
+                color: 'red',
+                weight: 2,
+                dashArray: '5, 5'
+            }).addTo(map);
+    
+            // Route
+            calculateRoute(deliveryPoint, destination);
+            calculateDistance(deliveryPoint, destination);
+        }
+    
         function calculateRoute(start, end) {
             const routeUrl = `https://router.project-osrm.org/route/v1/driving/${start[1]},${start[0]};${end[1]},${end[0]}?overview=full&geometries=geojson`;
     
@@ -356,13 +339,11 @@
                     if (data.routes && data.routes.length > 0) {
                         const route = data.routes[0].geometry;
     
-                        // Ajouter l'itinéraire sur la carte
                         routeLayer = L.geoJSON(route, {
                             style: { color: 'blue', weight: 4 }
                         }).addTo(map);
     
-                        // Calculate and display the distance for the route
-                        const routeDistance = data.routes[0].legs[0].distance / 1000; // Convert meters to kilometers
+                        const routeDistance = data.routes[0].legs[0].distance / 1000;
                         displayDistance(routeDistance);
                     } else {
                         alert("Aucun itinéraire trouvé.");
@@ -374,52 +355,46 @@
                 });
         }
     
-        // Fonction pour calculer la distance entre deux points
         function calculateDistance(start, end) {
-            const lat1 = start[0], lon1 = start[1];
-            const lat2 = end[0], lon2 = end[1];
-            const R = 6371; // Rayon de la Terre en km
-            const dLat = (lat2 - lat1) * Math.PI / 180;
-            const dLon = (lon2 - lon1) * Math.PI / 180;
+            const R = 6371;
+            const dLat = (end[0] - start[0]) * Math.PI / 180;
+            const dLon = (end[1] - start[1]) * Math.PI / 180;
             const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-                      Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+                      Math.cos(start[0] * Math.PI / 180) * Math.cos(end[0] * Math.PI / 180) *
                       Math.sin(dLon / 2) * Math.sin(dLon / 2);
             const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-            const distance = R * c; // Distance en km
+            const distance = R * c;
+    
             displayDistance(distance);
         }
     
-        // Display the distance on the page
         function displayDistance(distance) {
-            const distanceInfo = document.getElementById('distance-info');
-            distanceInfo.innerHTML = `La distance entre les deux points est de ${distance.toFixed(2)} km.`;
+            document.getElementById('distance-info').innerHTML = `La distance entre les deux points est de ${distance.toFixed(2)} km.`;
         }
     
-        // Fonction pour sélectionner un endroit sur la carte
+        // Reverse geocode map click
         map.on('click', function(e) {
-            const newLatLng = e.latlng;
+            const newLatLng = [e.latlng.lat, e.latlng.lng];
+            clearMapElements();
     
-            // If a marker exists, remove it
-            if (selectedMarker) {
-                map.removeLayer(selectedMarker);
-            }
+            const reverseUrl = `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${newLatLng[0]}&lon=${newLatLng[1]}`;
     
-            // Add new marker where the user clicked
-            selectedMarker = L.marker(newLatLng).addTo(map)
-                .bindPopup(`Vous avez sélectionné: ${newLatLng.lat.toFixed(4)}, ${newLatLng.lng.toFixed(4)}`)
-                .openPopup();
-    
-            // Recalculate the route from Montreal to the clicked location
-            if (polyline) {
-                map.removeLayer(polyline); // Remove previous polyline
-            }
-            if (routeLayer) {
-                map.removeLayer(routeLayer); // Remove previous route layer
-            }
-    
-            // Recalculate the route
-            calculateRoute(deliveryPoint, newLatLng);
-            calculateDistance(deliveryPoint, newLatLng);
+            fetch(reverseUrl)
+                .then(response => response.json())
+                .then(data => {
+                    const address = data.display_name || `${newLatLng[0].toFixed(4)}, ${newLatLng[1].toFixed(4)}`;
+                    currentMarker = L.marker(newLatLng).addTo(map)
+                        .bindPopup(`Adresse sélectionnée : ${address}`)
+                        .openPopup();
+                    drawRouteAndLine(newLatLng);
+                })
+                .catch(error => {
+                    console.error("Erreur reverse geocoding:", error);
+                    currentMarker = L.marker(newLatLng).addTo(map)
+                        .bindPopup(`Coordonnées : ${newLatLng[0].toFixed(4)}, ${newLatLng[1].toFixed(4)}`)
+                        .openPopup();
+                    drawRouteAndLine(newLatLng);
+                });
         });
     </script>
     
