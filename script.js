@@ -7,9 +7,10 @@ document.getElementById('price-range').addEventListener('input', function() {
 });
 //aapah miss fina 
 function filterPrice(){
-    const products = document.getElementsByClassName('product-card');
+    const produits = document.getElementsByClassName('product-card');
+    console.log(produits)
     for (let i = 0; i < products.length; i++) {
-        const product = products[i];
+        const product = produits[i];
         console.log(product.getAttribute('product-name'));
         console.log(parseFloat(product.getAttribute('data-price')));
         const price = parseFloat(product.getAttribute('data-price'));
