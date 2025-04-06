@@ -10,7 +10,7 @@ function filterPrice(){
     console.log("La classe de products sont: ", document.getElementsByClassName('products'))
     const produits = document.getElementsByClassName('product-card');
     console.log("Les produits sont: ", produits)
-    for (let i = 0; i < products.length; i++) {
+    for (let i = 0; i < produits.length; i++) {
         const product = produits[i];
         console.log(product.getAttribute('product-name'));
         console.log(parseFloat(product.getAttribute('data-price')));
