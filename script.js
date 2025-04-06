@@ -20,10 +20,10 @@ function filterPrice(){
             console.log('Masquer le produit : ' + product.getElementsByClassName('product-name')[0].textContent);
         } else {
             product.style.display = 'block'; // Afficher le produit si le prix est inférieur ou égal à maxPrice
-            console.log('Afficher le produit : ' + product.getElementsByClassName('product-name')[0]);
+            console.log('Afficher le produit : ' + product.getElementsByClassName('product-name')[0].textContent);
         }
         console.log(product.getElementsByClassName('product-name'));
-        console.log(parseFloat(product.getElementsByClassName('data-price')));
+        console.log(parseFloat(product.getElementsByClassName('data-price')[0].textContent));
     }
 }
 // Fonction pour filtrer les produits en fonction de la catégorie sélectionnée
