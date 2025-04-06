@@ -10,11 +10,15 @@ function filterPrice(){
     const products = document.getElementsByClassName('product-card');
     for (let i = 0; i < products.length; i++) {
         const product = products[i];
+        console.log(product.getAttribute('product-name'));
+        console.log(parseFloat(product.getAttribute('data-price')));
         const price = parseFloat(product.getAttribute('data-price'));
         if (price > maxPrice) {
             product.style.display = 'none'; // Masquer le produit si le prix est supérieur à maxPrice
+            console.log('Masquer le produit : ' + product.getAttribute('product-name'));
         } else {
             product.style.display = 'block'; // Afficher le produit si le prix est inférieur ou égal à maxPrice
+            console.log('Afficher le produit : ' + product.getAttribute('product-name'));
         }
     }
 }
