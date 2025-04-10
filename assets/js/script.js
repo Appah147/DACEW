@@ -9,7 +9,6 @@ document.getElementById('price-range').addEventListener('input', function() {
 /**
  * Filtre les produits en fonction de la categorie choisie
  * 
- * @returns void
  */
 function filterPrice(){
     console.log("La classe de products sont: ", document.getElementsByClassName('products'))
